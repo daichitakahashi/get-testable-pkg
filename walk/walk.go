@@ -44,6 +44,11 @@ func Walk(fsys fs.FS, modFile string, excludes []string) (map[string]*PackageInf
 			return nil // ignore
 		}
 
+		sp := filepath.ToSlash(p)
+		if e.Excluded(sp) {
+			return nil
+		}
+
 		dir := path.Join(base, filepath.ToSlash(filepath.Dir(p)))
 		i, ok := pkgInfo[dir]
 		if !ok {
